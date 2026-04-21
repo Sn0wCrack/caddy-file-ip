@@ -22,11 +22,11 @@ The module reads IP ranges (in CIDR notation) from local files. Each line can co
 
 ## Options
 
-| Name | Description | Type | Default |
-|------|-------------|------|---------|
-| `file` | List of file paths containing IP ranges (CIDR notation) | array of string | required |
-| `watch` | Enable file watching using fsnotify to automatically reload on changes | bool | false |
-| `interval` | Refresh interval for re-reading files (use with `watch` disabled) | duration | 0 (no refresh) |
+| Name       | Description                                                            | Type            | Default        |
+|------------|------------------------------------------------------------------------|-----------------|----------------|
+| `file`     | List of file paths containing IP ranges (CIDR notation)                | array of string | required       |
+| `watch`    | Enable file watching using fsnotify to automatically reload on changes | bool            | false          |
+| `interval` | Refresh interval for re-reading files (use with `watch` disabled)      | duration        | 0 (no refresh) |
 
 ## File Format
 
