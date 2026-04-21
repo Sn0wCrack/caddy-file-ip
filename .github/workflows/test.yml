@@ -70,8 +70,9 @@ jobs:
       - name: Check admin endpoint for file_ip config
         run: |
           CONFIG=$(curl -s http://localhost:2019/config/)
-          echo "Config response: $CONFIG"
-          echo "$CONFIG" | grep -q "file_ip"
+          echo "${CONFIG}" | jq -r '.'
+          echo "Config response: ${CONFIG}"
+          echo "${CONFIG}" | jq -e '.apps.http.servers.srv0.trusted_proxies.source == "file"'
 
       - name: Stop and remove container
         if: always()
