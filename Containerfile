@@ -1,4 +1,4 @@
-FROM caddy:2.11-builder AS builder
+FROM caddy:2.11.2-builder AS builder
 
 WORKDIR /build
 
@@ -9,7 +9,7 @@ COPY . .
 
 RUN xcaddy build --with github.com/sn0wcrack/caddy-file-ip=/build
 
-FROM caddy:2.11
+FROM caddy:2.11.2
 
 COPY --from=builder /build/caddy /usr/bin/caddy
 

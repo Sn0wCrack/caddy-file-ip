@@ -4,6 +4,7 @@
     servers {
         trusted_proxies file {
             file /app/ip-list.txt
+            interval 5m
         }
     }
 }
