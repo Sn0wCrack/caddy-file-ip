@@ -59,7 +59,7 @@ trusted_proxies file {
 You can get `dynamic_client_ip` from [here](https://github.com/tuzzmaniandevil/caddy-dynamic-clientip)
 
 ```caddy
-@denied dynamic_client_ip list {
+@denied dynamic_client_ip file {
     file /path/to/ip-ranges.txt
     watch
 }
