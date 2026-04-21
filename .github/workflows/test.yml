@@ -43,7 +43,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: ./test
-          file: ./Containerfile
+          file: ./test/Containerfile
           load: true
           tags: caddy-file-ip:test
 
