@@ -13,6 +13,7 @@ import (
 	"github.com/caddyserver/caddy/v2/caddyconfig/caddyfile"
 	"github.com/caddyserver/caddy/v2/modules/caddyhttp"
 	"github.com/fsnotify/fsnotify"
+	"go.uber.org/zap"
 )
 
 func init() {
@@ -26,6 +27,7 @@ type FileIPSource struct {
 
 	ranges  []netip.Prefix
 	ctx     caddy.Context
+	log     *zap.Logger
 	lock    *sync.RWMutex
 	watcher *fsnotify.Watcher
 	done    chan struct{}
@@ -40,6 +42,7 @@ func (FileIPSource) CaddyModule() caddy.ModuleInfo {
 
 func (s *FileIPSource) Provision(ctx caddy.Context) error {
 	s.ctx = ctx
+	s.log = ctx.Logger()
 	s.lock = new(sync.RWMutex)
 	s.done = make(chan struct{})
 
@@ -80,6 +83,9 @@ func (s *FileIPSource) startWatcher() error {
 					return
 				}
 				if event.Op&(fsnotify.Write|fsnotify.Create|fsnotify.Remove) != 0 {
+					if s.log != nil {
+						s.log.Debug("file change detected, reloading IP ranges", zap.String("file", event.Name))
+					}
 					s.lock.Lock()
 					s.loadRanges()
 					s.lock.Unlock()
@@ -104,6 +110,9 @@ func (s *FileIPSource) startTimer() {
 	for {
 		select {
 		case <-ticker.C:
+			if s.log != nil {
+				s.log.Debug("interval timer fired, reloading IP ranges")
+			}
 			s.lock.Lock()
 			s.loadRanges()
 			s.lock.Unlock()
