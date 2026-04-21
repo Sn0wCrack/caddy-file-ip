@@ -4,6 +4,7 @@
     "config:best-practices"
   ],
   "ignorePaths": [
-    "Containerfile"
+    "Containerfile",
+    "compose.dev.yaml"
   ]
 }

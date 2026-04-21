@@ -1,0 +1,12 @@
+services:
+  caddy:
+    build:
+      context: .
+      dockerfile: Containerfile
+    command: [ "caddy", "run", "--config", "/app/Caddyfile", "--adapter", "caddyfile"]
+    ports:
+      - "8080:8080"
+      - "2019:2019"
+    volumes:
+      - ./test/ip-list.txt:/app/ip-list.txt:ro
+      - ./test/Caddyfile:/app/Caddyfile:ro

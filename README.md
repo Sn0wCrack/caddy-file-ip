@@ -40,7 +40,7 @@ Each file should contain one IP range per line in CIDR notation:
 2001:db8::/32
 ```
 
-## Usage with trusted_proxies
+## Usage with `trusted_proxies`
 
 ```
 trusted_proxies file /path/to/ip-ranges.txt {
@@ -52,4 +52,16 @@ trusted_proxies file {
     file /path/to/ip-ranges-2.txt
     interval 1m
 }
+```
+
+## Usage with `dynamic_client_ip`
+
+You can get `dynamic_client_ip` from [here](https://github.com/tuzzmaniandevil/caddy-dynamic-clientip)
+
+```caddy
+@denied dynamic_client_ip list {
+    file /path/to/ip-ranges.txt
+    watch
+}
+abort @denied
 ```

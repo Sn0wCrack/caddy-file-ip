@@ -84,7 +84,7 @@ func (s *FileIPSource) startWatcher() error {
 				}
 				if event.Op&(fsnotify.Write|fsnotify.Create|fsnotify.Remove) != 0 {
 					if s.log != nil {
-						s.log.Debug("file change detected, reloading IP ranges", zap.String("file", event.Name))
+						s.log.Debug("file change detected, reloading IP ranges", zap.String("file", event.Name), zap.String("op", event.Op.String()))
 					}
 					s.lock.Lock()
 					s.loadRanges()

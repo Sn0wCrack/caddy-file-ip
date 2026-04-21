@@ -7,7 +7,9 @@ RUN go mod download
 
 COPY . .
 
-RUN xcaddy build --with github.com/sn0wcrack/caddy-file-ip=/build
+RUN xcaddy build \
+    --with github.com/tuzzmaniandevil/caddy-dynamic-clientip \
+    --with github.com/sn0wcrack/caddy-file-ip=/build
 
 FROM caddy:2.11.2
 

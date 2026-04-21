@@ -5,10 +5,18 @@
         trusted_proxies file {
             file /app/ip-list.txt
             interval 5m
+            watch
         }
     }
 }
 
 :8080 {
+    @check dynamic_client_ip file {
+       file /app/ip-list.txt
+       interval 5m
+       watch
+    }
+    abort @check
+
     respond "Hello"
 }
