@@ -42,8 +42,7 @@ jobs:
       - name: Build Containerfile
         uses: docker/build-push-action@v5
         with:
-          context: ./test
-          file: ./test/Containerfile
+          file: ./Containerfile
           load: true
           tags: caddy-file-ip:test
 

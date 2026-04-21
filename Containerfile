@@ -2,10 +2,10 @@ FROM caddy:2.11-builder AS builder
 
 WORKDIR /build
 
-COPY ../go.mod ../go.sum ./
+COPY go.mod go.sum ./
 RUN go mod download
 
-COPY ../. .
+COPY . .
 
 RUN xcaddy build --with github.com/sn0wcrack/caddy-file-ip=/build
 
