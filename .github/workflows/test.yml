@@ -50,6 +50,7 @@ jobs:
           docker run -d \
             --name caddy-test \
             -p 8080:8080 \
+            -p 2019:2019 \
             -v ${{ github.workspace }}/test/ip-list.txt:/app/ip-list.txt:ro \
             -v ${{ github.workspace }}/test/Caddyfile:/app/Caddyfile:ro \
             caddy-file-ip:test \
@@ -65,6 +66,12 @@ jobs:
         run: |
           sleep 2
           curl -s --fail http://localhost:8080/ | grep -q "Hello"
+
+      - name: Check admin endpoint for file_ip config
+        run: |
+          CONFIG=$(curl -s http://localhost:2019/config/)
+          echo "Config response: $CONFIG"
+          echo "$CONFIG" | grep -q "file_ip"
 
       - name: Stop and remove container
         if: always()
