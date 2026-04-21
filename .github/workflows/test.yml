@@ -75,6 +75,8 @@ jobs:
           echo "${CONFIG}" | jq -e '.apps.http.servers.srv0.trusted_proxies.source == "file"'
           # Check that trusted proxies has files set and it is an array containing our configured file
           echo "${CONFIG}" | jq -e '.apps.http.servers.srv0.trusted_proxies.files == ["/app/ip-list.txt"]'
+          # Check that trusted proxies file has a refresh interval of 5m
+          echo "${CONFIG}" | jq -e '.apps.http.servers.srv0.trusted_proxies.interval == 300000000000'
 
       - name: Stop and remove container
         if: always()
