@@ -67,7 +67,7 @@ jobs:
           sleep 2
           curl -s --fail http://localhost:8080/ | grep -q "Hello"
 
-      - name: Check admin endpoint for file_ip config
+      - name: Check admin endpoint for file source in trusted proxies
         run: |
           CONFIG=$(curl -s http://localhost:2019/config/)
           echo "${CONFIG}" | jq -r '.'
