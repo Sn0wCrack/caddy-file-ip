@@ -7,78 +7,24 @@ Caddy module that provides `http.ip_sources` output by reading IP address ranges
 Using xcaddy:
 
 ```bash
-xcaddy build --with github.com/caddyserver/caddy-file-ip
+xcaddy build --with github.com/sn0wcrack/caddy-file-ip
 ```
 
 Or using `caddy add-package`:
 
 ```bash
-caddy add-package github.com/caddyserver/caddy-file-ip
+caddy add-package github.com/sn0wcrack/caddy-file-ip
 ```
 
 ## Configuration
 
 The module reads IP ranges (in CIDR notation) from local files. Each line can contain a single IP address or CIDR prefix. Lines starting with `#` are treated as comments and ignored.
 
-### JSON Configuration
-
-```json
-{
-  "apps": {
-    "http": {
-      "servers": {
-        "example": {
-          "listen": [":8080"],
-          "routes": [{
-            "match": [{
-              "remote_ip": {
-                "source_ranges": ["@{file_ip_source}"]
-              }
-            }],
-            "handle": [{
-              "handler": "static_response",
-              "body": "Access Denied"
-            }]
-          }]
-        }
-      }
-    }
-  },
-  "modules": {
-    "http.ip_sources": {
-      "file_ip_source": {
-        "files": ["/path/to/ip-ranges.txt"],
-        "watch": true,
-        "interval": "1h"
-      }
-    }
-  }
-}
-```
-
-### Caddyfile Configuration
-
-```
-# Global options or server block
-{
-    ip_sources file /path/to/ip-ranges.txt {
-        watch
-        interval 1h
-    }
-}
-```
-
-Or inline:
-
-```
-@denied remote_ip source_ranges file /path/to/ip-ranges.txt
-```
-
 ## Options
 
 | Name | Description | Type | Default |
 |------|-------------|------|---------|
-| `files` | List of file paths containing IP ranges (CIDR notation) | array of string | required |
+| `file` | List of file paths containing IP ranges (CIDR notation) | array of string | required |
 | `watch` | Enable file watching using fsnotify to automatically reload on changes | bool | false |
 | `interval` | Refresh interval for re-reading files (use with `watch` disabled) | duration | 0 (no refresh) |
 
@@ -99,5 +45,11 @@ Each file should contain one IP range per line in CIDR notation:
 ```
 trusted_proxies file /path/to/ip-ranges.txt {
     watch
+}
+
+trusted_proxies file {
+    file /path/to/ip-ranges-1.txt
+    file /path/to/ip-ranges-2.txt
+    interval 1m
 }
 ```
