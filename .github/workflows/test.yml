@@ -74,7 +74,7 @@ jobs:
           # Check that trusted proxies is using the "file" source
           echo "${CONFIG}" | jq -e '.apps.http.servers.srv0.trusted_proxies.source == "file"'
           # Check that trusted proxies has files set and it is an array containing our configured file
-          echo "${CONFIG}" | jq -e '.apps.http.servers.srv0.trusted_proxies.files == ['/app/ip-list.txt']'
+          echo "${CONFIG}" | jq -e '.apps.http.servers.srv0.trusted_proxies.files == ["/app/ip-list.txt"]'
 
       - name: Stop and remove container
         if: always()
