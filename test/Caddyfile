@@ -1,6 +1,6 @@
 {
     debug
-    admin :2020
+    admin :2019
     servers {
         trusted_proxies file {
             file /app/ip-list.txt
