@@ -1,0 +1,9 @@
+{
+    trusted_proxies file {
+        file /app/ip-list.txt
+    }
+}
+
+:8080 {
+    respond "Hello"
+}
